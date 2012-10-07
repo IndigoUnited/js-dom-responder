@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9"> <![endif]-->
+<!--[if (!IE)]><!--> <html> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>dom-responder tests</title>
+        <script src="../node_modules/requirejs/require.js"></script>
+        <script src="../node_modules/expect.js/expect.js"></script>
+        <script src="util/adapter.js"></script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+        <script>
+            require(['base-adapter/dom/Utilities', 'src/DomResponder', 'jquery'], function (Utilities, DomResponder, $) {
+                Utilities.ready(function () {
+                    var rootResponder = new DomResponder(document.body);
+                    var ulDomResponder = new DomResponder($('.ul-wrapper').get(0));
+                    ulDomResponder.on('mouseenter li', function (event, el) {
+                        console.log('li enter', el);
+                    });
+                    ulDomResponder.on('mouseleave li', function (event, el) {
+                        console.log('li leave', el);
+                    });
+
+                    rootResponder.on('mouseenter ul', function (event, el) {
+                        console.log('ul enter', el);
+                    });
+
+                    rootResponder.on('mouseleave ul', function (event, el) {
+                        console.log('ul leave', el);
+                    });
+
+                    rootResponder.addChild(ulDomResponder);
+
+                    var formResponder = new DomResponder($('.form-wrapper').get(0));
+                    formResponder.on('focus input', function (event, el) {
+                        console.log('focus input', el);
+                    });
+                    formResponder.on('focus textarea', function (event, el) {
+                        console.log('focus textarea', el);
+                    });
+                    formResponder.on('focus select', function (event, el) {
+                        console.log('focus select', el);
+                    });
+                    formResponder.on('focus', function (event, el) {
+                        console.log('focus', el);
+                    });
+
+                    rootResponder.addChild(formResponder);
+
+                    rootResponder.listen();
+                });
+            });
+        </script>
+        <style>
+        body {
+            margin: 50px;
+        }
+        .ul-wrapper li, .ul-wrapper ul {
+            width: 200px;
+            list-style: none;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="ul-wrapper">
+            <ul class="nav nav-tabs nav-stacked">
+               <li class="item first"><a href="#">First text</a></li>
+               <li class="item second"><a href="#">Second text</a></li>
+               <li class="item third"><a href="#">Third text</a></li>
+               <li class="item four"><a href="#">Forth text</a></li>
+            </ul>
+        </div>
+        <div class="form-wrapper" tabindex="1">
+            <form action="#">
+                <input name="first_input" class="first-input" type="text" value=""/>
+                <input name="second_input" class="second-input" type="text" value=""/>
+                <textarea name="some_textarea"></textarea>
+                <select>' +
+                    <option value="first_value">First value</option>
+                    <option value="second_value">First value</option>
+                </select>
+                <input type="submit"/>
+            </form>
+        </div>
+    </body>
+</html>

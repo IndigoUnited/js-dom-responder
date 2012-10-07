@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9"> <![endif]-->
+<!--[if (!IE)]><!--> <html> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>dom-responder tests</title>
+        <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+        <script src="../node_modules/mocha/mocha.js"></script>
+        <script src="../node_modules/expect.js/expect.js"></script>
+        <script src="../node_modules/requirejs/require.js"></script>
+        <script src="util/adapter.js"></script>
+        <script>
+            var options = {
+                ui: 'bdd',
+                globals: ['console', 'currentExpression']   // mocha tells that mootools exposes a currentExpression global but I really doubt it..
+            };
+
+            // TODO: remove this once mocha fixes this (https://github.com/visionmedia/mocha/issues/243)
+            if (navigator.userAgent.indexOf('Opera') !== -1) {
+                options.globals.push('stats', 'report');
+            } else if (navigator.userAgent.indexOf('Firefox') !== -1) {
+                options.globals.push('getInterface');   // Sometimes Firefox exposes a getInterface global.. I think it's Firebug
+            }
+
+            mocha.setup(options);
+
+            require(['base-adapter/dom/Utilities'], function (Utilities) {
+                Utilities.ready(function () {
+                    require(['./test'], function () {
+                        mocha
+                        .run();
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="mocha"></div>
+    </body>
+</html>
