@@ -10,6 +10,8 @@
         "beforeEach",
         "after",
         "afterEach",
+        "mochaPhantomJS",
+        "mocha"
     ],
 
     "browser": true,
