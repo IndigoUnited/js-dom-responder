@@ -83,7 +83,7 @@ The tests are built on top of [mocha](http://visionmedia.github.com/mocha/) test
 
 First run `npm install` and `bower install` to install all the tools needed.
 Then simply open the `test/tester.html` file in the browser.
-
+To test via node run `npm test`.
 
 
 ## Dependencies ##
