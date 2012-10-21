@@ -1,7 +1,7 @@
 /*jshint strict:false, node:true*/
 
 // If we are at node then we use phantomjs + mocha-phantomjs
-if (!(typeof window !== 'undefined' && window.navigator && window.document)) { // Test if we are at command line
+if (!(typeof window !== 'undefined' && window.navigator && window.document)) {
     var fs = require('fs');
     var cp = require('child_process');
 
