@@ -29,7 +29,7 @@ if (!(typeof window !== 'undefined' && window.navigator && window.document)) { /
         'dejavu': '../components/dejavu/dist/amd/strict',
         'events-emitter': '../components/events-emitter/src/',
         'base-adapter': '../components/base-adapter/src/adapters/jquery',
-        'base-adapter/src': '../components/base-adapter/src',       // This is needed in order to access the triggerEvent utility for the tests..
+        'base-adapter/src': '../components/base-adapter/src',
         'UseYUI': '../node_modules/base-adapter-libs/yui3/UseYUI',
         'zepto': '../node_modules/base-adapter-libs/zepto/zepto',
         'jquery': '../node_modules/base-adapter-libs/jquery/jquery',
