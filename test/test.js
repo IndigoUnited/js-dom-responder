@@ -66,7 +66,10 @@ if (!(typeof window !== 'undefined' && window.navigator && window.document)) {
 
     window.baseAdapterPath = paths['base-adapter'];
 
-    define(['base-adapter/dom/Utilities'], function (Utilities) {
+    define(['base-adapter/dom/Utilities', 'has'], function (Utilities, has) {
+
+        has.add('debug', !window.mochaPhantomJS && !!window.console && !!console.info && !!console.log);
+
         Utilities.ready(function () {
             require(['specs/basic'], function () {
                 if (window.mochaPhantomJS) {
