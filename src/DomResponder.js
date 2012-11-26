@@ -502,7 +502,7 @@ define([
             var nativeEvent,
                 handledTargets;
 
-            event.$type = this.$self._nonPropagableEventsMappings[event.type] || event.type;
+            event.$type = this.$static._nonPropagableEventsMappings[event.type] || event.type;
 
             nativeEvent = Events.getNativeEvent(event);
             handledTargets = nativeEvent.$handledTargets;
@@ -575,7 +575,7 @@ define([
             var selector,
                 type = event.$type || event.type,
                 temp = this._events[type],
-                stale = !!event.$type || this.$self._nonPropagableEvents[type] != null,
+                stale = !!event.$type || this.$static._nonPropagableEvents[type] != null,
                 currEl,
                 el = $el || event.target,
                 wrappedEl;
