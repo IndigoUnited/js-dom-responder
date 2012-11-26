@@ -8,8 +8,9 @@ define([
     'amd-utils/array/indexOf',
     'events-emitter/EventsEmitter',
     'base-adapter/dom/Element',
-    'base-adapter/dom/Events'
-], function (Class, indexOf, EventsEmitter, Element, Events) {
+    'base-adapter/dom/Events',
+    'has'
+], function (Class, indexOf, EventsEmitter, Element, Events, has) {
 
     'use strict';
 
@@ -43,7 +44,7 @@ define([
             this._nativeElement = Element.getNativeElement(element);
 
             var responder = Element.data(element, this.$static.STORE_KEY);
-            if (responder instanceof DomResponder) {
+            if (has('debug') && responder instanceof DomResponder) {
                 throw new Error('A responder is already associated with the element.');
             }
 
@@ -87,7 +88,7 @@ define([
                 var info = this._extractEventInfo(event, this._eventInfo),
                     tmp = this.$static._nonPropagableEvents[info.type];
 
-                if (tmp === false && info.selector) {
+                if (has('debug') && tmp === false && info.selector) {
                     throw new Error('Event of type "' + info.type + '" can\'t be delegated, attach it directly instead.');
                 }
 
