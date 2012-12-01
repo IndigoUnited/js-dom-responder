@@ -28,6 +28,7 @@ if (!(typeof window !== 'undefined' && window.navigator && window.document)) {
         'amd-utils': '../components/amd-utils/src',
         'dejavu': '../components/dejavu/dist/amd/strict',
         'events-emitter': '../components/events-emitter/src/',
+        'has': '../components/has/has',
         'base-adapter': '../components/base-adapter/src/adapters/jquery',
         'base-adapter/src': '../components/base-adapter/src',
         'UseYUI': '../node_modules/base-adapter-libs/yui3/UseYUI',
@@ -68,7 +69,7 @@ if (!(typeof window !== 'undefined' && window.navigator && window.document)) {
 
     define(['base-adapter/dom/Utilities', 'has'], function (Utilities, has) {
 
-        has.add('debug', !window.mochaPhantomJS && !!window.console && !!console.info && !!console.log);
+        has.add('debug', !!window.console && !!console.info && !!console.log);
 
         Utilities.ready(function () {
             require(['specs/basic'], function () {
