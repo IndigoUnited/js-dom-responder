@@ -1,15 +1,15 @@
 {
-    "name": "dom-responder",
-    "version": "0.0.1",
-    "devDependencies": {
-        "mocha": "~1.7.3",
-        "expect.js": "~0.2.0",
-        "requirejs": "~2.1.2",
-        "phantomjs": "~0.2.3",
-        "mocha-phantomjs": "~1.0.1",
-        "base-adapter-libs": "git+ssh://git@github.com:IndigoUnited/base-adapter-libs.git"
-    },
-    "scripts": {
-        "test": "node test/test"
-    }
+  "name": "dom-responder",
+  "version": "0.0.1",
+  "devDependencies": {
+    "mocha": "~1.7.3",
+    "expect.js": "~0.2.0",
+    "requirejs": "~2.1.2",
+    "phantomjs": "~0.2.3",
+    "mocha-phantomjs": "~1.0.1",
+    "base-adapter-libs": "git+ssh://git@github.com:IndigoUnited/base-adapter-libs.git"
+  },
+  "scripts": {
+    "test": "node test/test"
+  }
 }
