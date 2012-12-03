@@ -683,7 +683,6 @@ define([
                 info,
                 temp;
 
-            // TODO: refactor this function.. is too big..
             if (!$event) {
                 this._emitter.off();
 
