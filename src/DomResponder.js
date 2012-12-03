@@ -586,7 +586,7 @@ define([
             if (temp) {
                 temp = temp.delegated;
 
-                // If it is not a stale event than we need iterate over the target parents unti we reach the responder element
+                // If it is not a stale event than we need iterate over the target parents until we reach the responder element
                 // as soon as all handlers are processed
                 // Foreach iteration we match it against all the declared event type selectors
                 if (!stale) {
