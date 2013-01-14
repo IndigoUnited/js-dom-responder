@@ -25,7 +25,7 @@ if (!(typeof window !== 'undefined' && window.navigator && window.document)) {
     });
 } else {
     var paths = {
-        'amd-utils': '../components/amd-utils/src',
+        'mout': '../components/mout/src',
         'dejavu': '../components/dejavu/dist/amd/strict',
         'events-emitter': '../components/events-emitter/src/',
         'has': '../components/has/has',

@@ -3,7 +3,7 @@ define([
     'base-adapter/src/util/triggerEvent',
     'base-adapter/dom/Element',
     'base-adapter/dom/Events',
-    'amd-utils/function/bind',
+    'mout/function/bind',
     'jquery'
 ],
 function (DomResponder, triggerEvent, Element, Events, bind, $) {

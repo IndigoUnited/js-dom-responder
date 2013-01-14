@@ -5,7 +5,7 @@
  */
 define([
     'dejavu/Class',
-    'amd-utils/array/indexOf',
+    'mout/array/indexOf',
     'events-emitter/EventsEmitter',
     'base-adapter/dom/Element',
     'base-adapter/dom/Events',

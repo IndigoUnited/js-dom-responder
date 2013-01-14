@@ -88,12 +88,12 @@ To test via node run `npm test`.
 
 ## Dependencies ##
 
-BaseAdapter depends on [amd-utils](https://github.com/millermedeiros/amd-utils), [dejavu](https://github.com/IndigoUnited/dejavu) and [base-adapter](https://github.com/IndigoUnited/base-adapter).
+BaseAdapter depends on [mout](https://github.com/mout/mout), [dejavu](https://github.com/IndigoUnited/dejavu) and [base-adapter](https://github.com/IndigoUnited/base-adapter).
 If you use RequireJS specify them like this:
 
 ```js
     paths : {
-        'amd-utils': '../vendor/amd-utils/src'
+        'mout': '../vendor/mout/src'
         'dejavu': '../vendor/dejavu/dist/amd/strict',                  // use the loose version in production
         'base-adapter': '../vendor/base-adapter/src/adapters/jquery',  // use one of the available adapters
         'jquery': '../vendor/jquery/jquery.js'                         // use one of the base libraries
