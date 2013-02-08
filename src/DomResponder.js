@@ -600,7 +600,7 @@ define([
                             }
 
                             // TODO: We can break as soon as we are done by analyzing the delegated count
-                            currEl = currEl.getParent ? currEl.getParent() : el.parentNode;  // Ugly thing to speed up mootools running IE<=8 without slowing others
+                            currEl = currEl.getParent ? currEl.getParent() : currEl.parentNode;  // Ugly thing to speed up mootools running IE<=8 without slowing others
                         }
                     }
 
