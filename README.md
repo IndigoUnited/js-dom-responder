@@ -1,4 +1,4 @@
-# DOMResponder #
+DOMResponder
 ---
 
 Observe and respond to DOM events efficiently.
@@ -6,78 +6,78 @@ It is built on top of [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD).
 
 
 
-## API ##
+## API
 
-### DomResponder#getElement() ###
+### DomResponder#getElement()
 
 Returns the element associated with the instance.
 
 
-### DomResponder#on(event, fn, $context) ###
+### DomResponder#on(event, fn, $context)
 
 Register an `event` listener `fn` (with the option to pass a `$context`).
 The event name can contain a selector to be used for delegation (e.g.: `click li.item` will listen for clicks in li elements with the `item` class)
 
 
-### DomResponder#off($event, $fn, $context) ###
+### DomResponder#off($event, $fn, $context)
 
 Remove `event` listener `$fn` that was added with `$context`.
 If no `$fn` is passed, removes all listeners for `$event` or all the emitter listeners if no `$event` is passed.
 
 
-### DomResponder#hasListener(event, $fn) ###
+### DomResponder#hasListener(event, $fn)
 
 Checks if the listener `$fn` for event `event` is registered.
 If no `$fn` is passed, returns true if at least one listener is registered for `event`.
 
 
-### DomResponder#addChild(responder) ###
+### DomResponder#addChild(responder)
 
 Adds a `responder` as its child.
 
 
-### DomResponder#removeChild(responder) ###
+### DomResponder#removeChild(responder)
 
 Removes a `responder` as its child.
 
 
-### DomResponder#removeChildren() ###
+### DomResponder#removeChildren()
 
 Removes all child responders.
 
 
-### DomResponder#hasChild(responder) ###
+### DomResponder#hasChild(responder)
 
 Check if a `responder` is a child of the instance.
 
 
-### DomResponder#listen() ###
+### DomResponder#listen()
 
 Listen to all registered events as well as descendant events, acting as a proxy to them.
 
 
-### DomResponder#unlisten() ###
+### DomResponder#unlisten()
 
 Stops listening to all registered events as well as descendant events.
 
 
-### DomResponder#isListening() ###
+### DomResponder#isListening()
 
 Check if the instance is currently listening for events.
 
 
-### DomResponder#hasManager() ###
+### DomResponder#hasManager()
 
 Check if the instance is not listening but has a manager proxying the events for it.
 
-### DomResponder#destroy() ###
+### DomResponder#destroy()
 
 Destroys the instance.
 Stops and remove listeners, removes all children and cleans other resources.
 
 
 
-## Testing ##
+## Testing
 
 The tests are built on top of [mocha](http://visionmedia.github.com/mocha/) test framework and the [expect.js](https://github.com/LearnBoost/expect.js) assert library.
 
@@ -86,7 +86,7 @@ Then simply open the `test/tester.html` file in the browser.
 To test via node run `npm test`.
 
 
-## Dependencies ##
+## Dependencies
 
 BaseAdapter depends on [mout](https://github.com/mout/mout), [dejavu](https://github.com/IndigoUnited/dejavu) and [base-adapter](https://github.com/IndigoUnited/base-adapter).
 If you use RequireJS specify them like this:
@@ -112,6 +112,6 @@ Aditionally you have to specify the following map:
 
 
 
-## License ##
+## License
 
 Released under the [MIT License](http://www.opensource.org/licenses/mit-license.php).
