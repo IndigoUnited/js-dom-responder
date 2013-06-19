@@ -4,9 +4,8 @@
   "main": "src/",
   "dependencies": {
     "mout": "~0.3.0",
-    "dejavu": "~0.3.1",
     "events-emitter": "git://github.com/IndigoUnited/events-emitter.git",
-    "base-adapter": "git://github.com/IndigoUnited/base-adapter.git",
+    "jquery": "~1.9",
     "has": "*"
   }
 }

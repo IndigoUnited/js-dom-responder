@@ -12,8 +12,8 @@
         <script src="util/adapter.js"></script>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
         <script>
-            require(['base-adapter/dom/Utilities', 'src/DomResponder', 'jquery'], function (Utilities, DomResponder, $) {
-                Utilities.ready(function () {
+            require(['src/DomResponder', 'jquery'], function (DomResponder, $) {
+                $(document).ready(function () {
                     var rootResponder = new DomResponder(document.body);
                     var ulDomResponder = new DomResponder($('.ul-wrapper').get(0));
                     ulDomResponder.on('mouseenter li', function (event, el) {
