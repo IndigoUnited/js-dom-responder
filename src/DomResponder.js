@@ -2,11 +2,10 @@
  * DomResponder class.
  */
 define([
-    'mout/array/indexOf',
     'events-emitter/EventsEmitter',
     'has',
     'jquery'
-], function (createElement, indexOf, EventsEmitter, has, $) {
+], function (EventsEmitter, has, $) {
 
     'use strict';
 
@@ -169,7 +168,7 @@ define([
      * @return {DomResponder} The instance itself to allow chaining
      */
     DomResponder.prototype.addChild = function (responder) {
-        var pos = indexOf(this._children, responder);
+        var pos = this._children.indexOf(responder);
 
         if (pos === -1) {
             this._children.push(responder);
@@ -190,7 +189,7 @@ define([
      * @return {DomResponder} The instance itself to allow chaining
      */
     DomResponder.prototype.removeChild = function (responder) {
-        var pos = indexOf(this._children, responder);
+        var pos = this._children.indexOf(responder);
 
         if (pos !== -1) {
             this._children[pos]._parent = null;
@@ -224,7 +223,7 @@ define([
      * @return {Boolean} True if it is, false otherwise
      */
     DomResponder.prototype.hasChild = function (responder) {
-        return indexOf(this._children, responder) !== -1;
+        return this._children.indexOf(responder) !== -1;
     };
 
     /**
@@ -501,7 +500,7 @@ define([
 
         // Solve the bug described above about handlers being called twice.
         if (handledTargets) {
-            if (indexOf(handledTargets, this._element) !== -1) {
+            if (handledTargets.indexOf(this._element) !== -1) {
                 return;
             }
             handledTargets.push(this._element);
