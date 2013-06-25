@@ -3,9 +3,11 @@
   "version": "0.0.1",
   "main": "src/",
   "dependencies": {
-    "mout": "~0.3.0",
-    "events-emitter": "git://github.com/IndigoUnited/events-emitter.git",
+    "events-emitter": "*",
     "jquery": "~1.9",
     "has": "*"
+  },
+  "devDependencies": {
+    "mout": "~0.6.0"
   }
 }
