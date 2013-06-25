@@ -1,14 +1,20 @@
 define([
     'src/DomResponder',
-    'base-adapter/src/util/triggerEvent',
-    'base-adapter/dom/Element',
-    'base-adapter/dom/Events',
+    '../util/triggerEvent',
     'mout/function/bind',
     'jquery'
 ],
-function (DomResponder, triggerEvent, Element, Events, bind, $) {
+function (DomResponder, triggerEvent, bind, $) {
 
     'use strict';
+
+    function getNativeElement(element) {
+        if (element.nodeType != null || element === window) {
+            return element;
+        } else {
+            return element.get(0);
+        }
+    }
 
     // Setup the html
     var html = '<div id="test-wrapper">' +
@@ -57,7 +63,7 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
 
     $(document.body).append($(html));
 
-    rootElement = Element.findOne('#test');
+    rootElement = $('#test').get(0);
 
     $(rootElement).css({
         opacity: 0,
@@ -71,14 +77,14 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
 
     // Create the responders
     rootResponder = new DomResponder(rootElement);
-    overlappingResponder = new DomResponder(Element.findOne('#test-wrapper'));
-    ulResponder = new DomResponder(Element.findOne('.ul-wrapper ul'), rootElement);
-    listResponder = new DomResponder(Element.findOne('.ul-wrapper'), rootElement);
-    formResponder = new DomResponder(Element.findOne('.form-wrapper form', rootElement));
-    okButtonResponder = new DomResponder(Element.findOne('.actions .ok', rootElement));
-    cancelButtonResponder = new DomResponder(Element.findOne('.actions .cancel', rootElement));
+    overlappingResponder = new DomResponder($('#test-wrapper').get(0));
+    ulResponder = new DomResponder($(rootElement).find('.ul-wrapper ul').get(0));
+    listResponder = new DomResponder($(rootElement).find('.ul-wrapper').get(0));
+    formResponder = new DomResponder($(rootElement).find('.form-wrapper form').get(0));
+    okButtonResponder = new DomResponder($(rootElement).find('.actions .ok').get(0));
+    cancelButtonResponder = new DomResponder($(rootElement).find('.actions .cancel').get(0));
 
-    temp = Element.find('.ul-wrapper li', rootElement);
+    temp = $(rootElement).find('.ul-wrapper li').get();
     for (x = 0; x < temp.length; x += 1) {
         liResponders.push(new DomResponder(temp[x]));
     }
@@ -97,7 +103,6 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
 
     // Actual tests
     describe('DomResponder', function () {
-
         beforeEach(function () {
             overlappingResponder.off();
             rootResponder.off();
@@ -116,9 +121,7 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
         });
 
         describe('.on()', function () {
-
             it('should register the listener for the event', function () {
-
                 var someFunc = function () {},
                     otherFunc = function () {};
 
@@ -127,14 +130,12 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
 
                 expect(rootResponder.hasListener('click', someFunc)).to.be.equal(true);
                 expect(rootResponder.hasListener('click', otherFunc)).to.be.equal(true);
-
             });
 
             it('should not respond to the event unless it is listening', function () {
-
                 var someFunc = function (e, el) {
                     stack.push('some');
-                    el = Element.getNativeElement(el);
+                    el = getNativeElement(el);
                     expect(el.nodeType).to.be.ok();
                     expect(el).to.be.equal(rootElement);
                 },
@@ -143,7 +144,7 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                     },
                     evenOtherFunc = function (e, el) {
                         stack.push('other');
-                        el = Element.getNativeElement(el);
+                        el = getNativeElement(el);
                         expect(el.nodeType).to.be.ok();
                         expect(el.tagName.toLowerCase()).to.be.equal('li');
                     };
@@ -163,11 +164,9 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(liResponders[0].getNativeElement(), 'click');
 
                 expect(stack).to.be.eql(['some', 'other', 'other', 'some', 'other']);
-
             });
 
             it('should not respond to the event unless it is has a manager listening', function () {
-
                 var someFunc = function () {
                     stack.push('some');
                 },
@@ -187,11 +186,9 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(liResponders[0].getNativeElement(), 'click');
 
                 expect(stack).to.be.eql(['other', 'some']);
-
             });
 
             it('should call handlers with the correct context', function () {
-
                 var someFunc = function () {
                     stack.push(this);
                 },
@@ -203,11 +200,9 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(rootElement, 'click');
 
                 expect(stack).to.be.eql([obj]);
-
             });
 
             it('should not duplicate the same listener', function () {
-
                 var someFunc = function () {
                     stack.push('some');
                 };
@@ -220,11 +215,9 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(rootElement, 'click');
 
                 expect(stack).to.be.eql(['some']);
-
             });
 
             it('should throw an error on delegation of events that are not supported', function () {
-
                 var unsupported = ['load', 'unload', 'error', 'scroll'],
                     x,
                     addNormal = function (x) {
@@ -238,15 +231,11 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                     expect(bind(addNormal, this, x)).to.not.throwException();
                     expect(bind(addDelegation, this, x)).to.throwException(/can't be delegated/);
                 }
-
             });
-
         });
 
         describe('.off(event, fn, $context)', function () {
-
             it('should remove the specified listener', function () {
-
                 var listener = function () {
                         stack.push('listener');
                     },
@@ -281,13 +270,10 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(listResponder.getNativeElement(), 'click');
 
                 expect(stack).to.eql(['listener', 'listener', 'other', 'listener', 'other']);
-
             });
-
         });
 
         describe('.off($event)', function () {
-
             var listener1 = function () {
                 stack.push('listener1');
             },
@@ -299,7 +285,6 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 };
 
             it('should remove all the listeners of a given event', function () {
-
                 rootResponder.on('click', listener1);
                 rootResponder.on('click', listener2);
                 rootResponder.on('mouseover', listener3);
@@ -331,11 +316,9 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(listResponder.getNativeElement(), 'mouseover');
 
                 expect(stack).to.eql(['listener1', 'listener1', 'listener2', 'listener3', 'listener3']);
-
             });
 
             it('should remove all the listeners (if no event is specified)', function () {
-
                 rootResponder.on('click', listener1);
                 rootResponder.on('click', listener2);
                 rootResponder.on('mouseover', listener3);
@@ -361,19 +344,16 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(listResponder.getNativeElement(), 'mouseover');
 
                 expect(stack).to.eql(['listener1', 'listener1', 'listener2', 'listener3']);
-
             });
-
         });
 
         describe('.addChild()', function () {
-
             var someResponder,
                 otherResponder;
 
             before(function () {
                 someResponder = new DomResponder(document.body);
-                otherResponder = new DomResponder(Element.findOne('#mocha'));
+                otherResponder = new DomResponder($('#mocha').get(0));
             });
 
             after(function () {
@@ -388,19 +368,16 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 someResponder.addChild(otherResponder);
 
                 expect(someResponder.hasChild(otherResponder)).to.be.equal(true);
-
             });
-
         });
 
         describe('.removeChild()', function () {
-
             var someResponder,
                 otherResponder;
 
             before(function () {
                 someResponder = new DomResponder(document.body);
-                otherResponder = new DomResponder(Element.findOne('#mocha'));
+                otherResponder = new DomResponder($('#mocha').get(0));
             });
 
             after(function () {
@@ -409,7 +386,6 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
             });
 
             it('should unregister the passed responder as its child', function () {
-
                 someResponder.addChild(otherResponder);
 
                 expect(someResponder.hasChild(otherResponder)).to.be.equal(true);
@@ -417,19 +393,16 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 someResponder.removeChild(otherResponder);
 
                 expect(someResponder.hasChild(otherResponder)).to.be.equal(false);
-
             });
-
         });
 
         describe('.removeChildren()', function () {
-
             var someResponder,
                 otherResponder;
 
             before(function () {
                 someResponder = new DomResponder(document.body);
-                otherResponder = new DomResponder(Element.findOne('#mocha'));
+                otherResponder = new DomResponder($('#mocha').get(0));
             });
 
             after(function () {
@@ -438,7 +411,6 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
             });
 
             it('should unregister all the children', function () {
-
                 someResponder.addChild(otherResponder);
                 someResponder.addChild(rootResponder);
 
@@ -449,19 +421,15 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
 
                 expect(someResponder.hasChild(otherResponder)).to.be.equal(false);
                 expect(someResponder.hasChild(rootResponder)).to.be.equal(false);
-
             });
-
         });
 
         describe('.listen()', function () {
-
             beforeEach(function () {
                 formResponder.off();
             });
 
             it('should listen to all declared listeners as well as all proxied descendants events', function () {
-
                 var liClick = function () {
                     stack.push('li click');
                 },
@@ -497,11 +465,9 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 expect(liResponders[0].hasManager()).to.be.equal(true);
 
                 expect(stack).to.be.eql(['li click', 'list click', 'root click']);
-
             });
 
             it('should work well with delegated events', function () {
-
                 var liClick = function () {
                     stack.push('li click');
                 },
@@ -529,13 +495,11 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(liResponders[0].getNativeElement(), 'click');
 
                 expect(stack).to.be.eql(['li click', 'list click li', 'list click', 'root click li']);
-
             });
 
             it('should work well with events that do not bubble', function () {
-
                 var change = function (e, el) {
-                    el = Element.getNativeElement(el);
+                    el = getNativeElement(el);
                     stack.push('change ' + el.nodeName.toLowerCase());
                 },
                     select = function () {
@@ -549,11 +513,11 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                         stack.push('reset');
                     },
                     focus = function (e, el) {
-                        el = Element.getNativeElement(el);
+                        el = getNativeElement(el);
                         stack.push('focus ' + el.nodeName.toLowerCase());
                     },
                     blur = function (e, el) {
-                        el = Element.getNativeElement(el);
+                        el = getNativeElement(el);
                         stack.push('blur ' + el.nodeName.toLowerCase());
                     },
                     element;
@@ -567,32 +531,32 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
 
                 rootResponder.listen();
 
-                element = Element.findOne('input', formResponder.getNativeElement());
+                element = formResponder.getElement().find('input').get(0);
                 triggerEvent(element, 'focus');
                 element.value = 'some';
                 triggerEvent(element, 'change');
                 triggerEvent(element, 'blur');
 
-                element = Element.findOne('textarea', formResponder.getNativeElement());
+                element = formResponder.getElement().find('textarea').get(0);
                 triggerEvent(element, 'focus');
                 element.value = 'some';
                 triggerEvent(element, 'change');
                 triggerEvent(element, 'blur');
 
-                element = Element.findOne('select', formResponder.getNativeElement());
+                element = formResponder.getElement().find('select').get(0);
                 triggerEvent(element, 'focus');
                 element.selectedIndex = 1;
                 triggerEvent(element, 'change');
                 triggerEvent(element, 'blur');
 
-                element = Element.findOne('input', formResponder.getNativeElement());
+                element = formResponder.getElement().find('input').get(0);
                 triggerEvent(element, 'focus');
 
                 element = formResponder.getNativeElement();
                 triggerEvent(element, 'submit');
                 triggerEvent(element, 'reset');
 
-                element = Element.findOne('input', formResponder.getNativeElement());
+                element = formResponder.getElement().find('input').get(0);
                 triggerEvent(element, 'select');
 
                 // If there is no createEvent, the fireEvent will be used and it messes the delegation test.
@@ -605,24 +569,22 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 // But it works nicely with real initiated user events
                 expect((function () {
 
-                    if (window.baseAdapterPath.indexOf('jquery')) {
-                        if (stack.toString() === [
-                            'focus input', 'focus input', 'change input', 'blur input', 'blur input',
-                            'focus textarea', 'focus textarea', 'change textarea', 'blur textarea', 'blur textarea',
-                            'focus select', 'focus select', 'change select', 'blur select', 'blur select', 'focus input', 'focus input',
-                            'submit', 'reset', 'select'
-                        ].toString()) {
-                            return true;
-                        }
+                    if (stack.toString() === [
+                        'focus input', 'focus input', 'change input', 'blur input', 'blur input',
+                        'focus textarea', 'focus textarea', 'change textarea', 'blur textarea', 'blur textarea',
+                        'focus select', 'focus select', 'change select', 'blur select', 'blur select', 'focus input', 'focus input',
+                        'submit', 'reset', 'select'
+                    ].toString()) {
+                        return true;
+                    }
 
-                        if (stack.toString() === [
-                            'focus input', 'focus input', 'change input', 'blur input',
-                            'focus textarea', 'focus textarea', 'change textarea', 'blur textarea',
-                            'focus select', 'focus select', 'change select', 'blur select', 'focus input', 'focus input',
-                            'submit', 'reset', 'select'
-                        ].toString()) {
-                            return true;
-                        }
+                    if (stack.toString() === [
+                        'focus input', 'focus input', 'change input', 'blur input',
+                        'focus textarea', 'focus textarea', 'change textarea', 'blur textarea',
+                        'focus select', 'focus select', 'change select', 'blur select', 'focus input', 'focus input',
+                        'submit', 'reset', 'select'
+                    ].toString()) {
+                        return true;
                     }
 
                     if (stack.toString() === [
@@ -636,15 +598,11 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
 
                     return false;
                 }())).to.be.equal(true);
-
             });
-
         });
 
         describe('.unlisten()', function () {
-
             it('should unlisten to all registered events as well as all proxied descendants events', function () {
-
                 var liClick = function () {
                     stack.push('li click');
                 },
@@ -688,15 +646,11 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(liResponders[0].getNativeElement(), 'click');
 
                 expect(stack).to.be.eql(['li click', 'list click li', 'list click', 'root click']);
-
             });
-
         });
 
         describe('.stopPropagation()', function () {
-
             it('should not call listeners up in the hierarchy', function () {
-
                 var liClick = function (e) {
                     stack.push('li click');
                     e.stopPropagation();
@@ -736,15 +690,11 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(liResponders[0].getNativeElement(), 'click');
 
                 expect(stack).to.be.eql(['li click', 'li click 2', 'li click 2', 'list click li', 'list click']);
-
             });
-
         });
 
         describe('.destroy()', function () {
-
             it('should destroy the instance, stop listening, remove listeners and children', function () {
-
                 var liClick = function () {
                     stack.push('li click');
                 },
@@ -781,14 +731,11 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
                 triggerEvent(liResponders[0].getNativeElement(), 'click');
 
                 expect(stack.length).to.be.equal(0);
-
             });
-
         });
 
         it('it should throw an error if a new one is constructed over an element', function () {
-
-            var element = Element.findOne('.actions', rootElement),
+            var element = $(rootElement).find('.actions').get(0),
                 responder = new DomResponder(element);
 
             responder.listen();
@@ -798,11 +745,9 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
             expect(function () {
                 return new DomResponder(element);
             }).to.throwException(/already associated/);
-
         });
 
         it('should work even if different responders overlap each other', function () {
-
             var liClick = function () {
                 stack.push('li click');
             },
@@ -841,9 +786,6 @@ function (DomResponder, triggerEvent, Element, Events, bind, $) {
             triggerEvent(liResponders[0].getNativeElement(), 'click');
 
             expect(stack).to.be.eql(['li click', 'list click li', 'list click', 'root click li', 'ul click li', 'ul click', 'list click li', 'list click']);
-
         });
-
     });
-
 });
