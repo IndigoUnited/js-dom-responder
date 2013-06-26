@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "git://github.com/IndigoUnited/dom-responder"
+    "url": "git://github.com/IndigoUnited/dom-responder.git"
   },
   "devDependencies": {
     "testem": "~0.2.98"
   },
   "scripts": {
-    "test": "testem ci"
+    "test": "testem ci --skip chromium"
   }
 }
