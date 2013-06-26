@@ -1,4 +1,4 @@
-# DOMResponder
+# DOMResponder [![Build Status](https://secure.travis-ci.org/IndigoUnited/dom-responder.png?branch=master)](http://travis-ci.org/IndigoUnited/dom-responder)
 
 Observe and respond to DOM events efficiently.
 
@@ -18,22 +18,22 @@ events without having to worry about how many events are attached to the DOM.
 Returns the element associated with the instance.
 
 
-### DomResponder#on(event, fn, $context)
+### DomResponder#on(event, fn, [context])
 
-Register an `event` listener `fn` (with the option to pass a `$context`).
+Register an `event` listener `fn` (with the option to pass a `context`).
 The event name can contain a selector to be used for delegation (e.g.: `click li.item` will listen for clicks in li elements with the `item` class)
 
 
-### DomResponder#off($event, $fn, $context)
+### DomResponder#off([event], [fn], [context])
 
-Remove `event` listener `$fn` that was added with `$context`.
-If no `$fn` is passed, removes all listeners for `$event` or all the emitter listeners if no `$event` is passed.
+Remove `event` listener `fn` that was added with `context`.
+If no `fn` is passed, removes all listeners for `event` or all the emitter listeners if no `event` is passed.
 
 
-### DomResponder#hasListener(event, $fn)
+### DomResponder#hasListener(event, [fn])
 
-Checks if the listener `$fn` for event `event` is registered.
-If no `$fn` is passed, returns true if at least one listener is registered for `event`.
+Checks if the listener `fn` for event `event` is registered.
+If no `fn` is passed, returns true if at least one listener is registered for `event`.
 
 
 ### DomResponder#addChild(responder)
@@ -83,16 +83,6 @@ Stops and remove listeners, removes all children and cleans other resources.
 
 
 
-## Testing
-
-The tests are built on top of [mocha](http://visionmedia.github.com/mocha/) test framework and the [expect.js](https://github.com/LearnBoost/expect.js) assert library.
-
-First run `npm install` and `bower install` to install all the tools needed.
-Then simply open the `test/tester.html` file in the browser.
-To test via node run `npm test`.
-
-
-
 ## How to use
 
 For now, this library is only available in the [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) format.   
@@ -111,6 +101,15 @@ paths : {
 ```
 
 Note that if you want to support `IE8` you will need to install [es5-shim](https://github.com/kriskowal/es5-shim.git) and require both `es5-shim` and `es5-sham` with your AMD loader before requiring this library.
+
+
+## Tests
+
+1. `bower install`
+2. `npm install`
+3. `npm test`
+
+You will need [bower](https://github.com/bower/bower) to install the library dependencies.
 
 
 
