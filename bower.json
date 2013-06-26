@@ -1,9 +1,9 @@
 {
   "name": "dom-responder",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "src/",
   "dependencies": {
-    "events-emitter": "*",
+    "events-emitter": "~0.1",
     "jquery": "~1.9",
     "has": "*"
   },
