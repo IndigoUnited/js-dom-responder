@@ -8,6 +8,10 @@
     "has": "*"
   },
   "devDependencies": {
-    "mout": "~0.6.0"
+    "mout": "~0.6.0",
+    "expect": "~0.2.0",
+    "es5-shim": "~2.1.0",
+    "mocha": "~1.11.0",
+    "requirejs": "~2.1.6"
   }
 }

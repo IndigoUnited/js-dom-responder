@@ -1,8 +1,13 @@
-DOMResponder
----
+# DOMResponder
 
 Observe and respond to DOM events efficiently.
-It is built on top of [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD).
+
+This library is a low-level component to be used in hierarchial views.
+The concept is very simple. Multiple instances can be linked together and declare their events individually.
+No matter how many `click` events the instances along the tree listen, only one `click` is attached to the DOM by the root instance.
+
+The root instance effictivelly manages all descendants events, taking the delegation one step further. This allows descendants view to listen to their own
+events without having to worry about how many events are attached to the DOM.
 
 
 
@@ -70,6 +75,7 @@ Check if the instance is currently listening for events.
 
 Check if the instance is not listening but has a manager proxying the events for it.
 
+
 ### DomResponder#destroy()
 
 Destroys the instance.
@@ -86,29 +92,25 @@ Then simply open the `test/tester.html` file in the browser.
 To test via node run `npm test`.
 
 
-## Dependencies
 
-BaseAdapter depends on [mout](https://github.com/mout/mout), [dejavu](https://github.com/IndigoUnited/dejavu) and [base-adapter](https://github.com/IndigoUnited/base-adapter).
+## How to use
+
+For now, this library is only available in the [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) format.   
+DomResponder depends on [events-emitter](https://github.com/IndigoUnited/events-emitter), [jquery](https://github.com/jquery/jquery) and [has](https://github.com/phiggins42/has).
+
 If you use RequireJS specify them like this:
 
 ```js
-    paths : {
-        'mout': '../vendor/mout/src'
-        'dejavu': '../vendor/dejavu/dist/amd/strict',                  // use the loose version in production
-        'base-adapter': '../vendor/base-adapter/src/adapters/jquery',  // use one of the available adapters
-        'jquery': '../vendor/jquery/jquery.js'                         // use one of the base libraries
-    },
+// ...
+paths : {
+   'events-emitter': '../components/events-emitter/src',
+   'has': '../components/has/has'
+   'jquery': '../components/jquery/jquery'
+}
+// ...
 ```
 
-Aditionally you have to specify the following map:
-
-```js
-    map: {
-        '*': {
-            'base-adapter/src': '../vendor/base-adapter/src'
-        }
-    },
-```
+Note that if you want to support `IE8` you will need to install [es5-shim](https://github.com/kriskowal/es5-shim.git) and require both `es5-shim` and `es5-sham` with your AMD loader before requiring this library.
 
 
 
