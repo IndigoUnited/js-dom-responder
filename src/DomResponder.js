@@ -76,7 +76,7 @@ define([
     DomResponder.prototype.on = function (event, fn, context) {
         if (!this._emitter.has(event, fn, context)) {
             var info = this._extractEventInfo(event, this._eventInfo),
-                tmp = this.constructor._nonPropagableEvents[info.type];
+                tmp = this.constructor._nonPropagableEvents[info.type] || DomResponder._nonPropagableEvents[info.type];
 
             if (has('debug') && tmp === false && info.selector) {
                 throw new Error('Event of type "' + info.type + '" can\'t be delegated, attach it directly instead.');
@@ -421,7 +421,7 @@ define([
      * @param {String} type The event type
      */
     DomResponder.prototype._attachEvent = function (type) {
-        var tmp = this.constructor._nonPropagableEvents[type];
+        var tmp = this.constructor._nonPropagableEvents[type] || DomResponder._nonPropagableEvents[type];
 
         if (tmp) {
             this._element.on(type, this._onStaleEvent);
@@ -443,7 +443,7 @@ define([
      * @param {String} type The event type
      */
     DomResponder.prototype._detachEvent = function (type) {
-        var tmp = this.constructor._nonPropagableEvents[type];
+        var tmp = this.constructor._nonPropagableEvents[type] || DomResponder._nonPropagableEvents[type];
 
         if (tmp) {
             this._element.off(type, this._onStaleEvent);
@@ -491,9 +491,10 @@ define([
      */
     DomResponder.prototype._onStaleEvent = function (event, el) {
         var nativeEvent,
-            handledTargets;
+            handledTargets,
+            nonPropagableEventMapping = this.constructor._nonPropagableEventsMappings[event.type] || DomResponder._nonPropagableEventsMappings[event.type];
 
-        event.$type = this.constructor._nonPropagableEventsMappings[event.type] || event.type;
+        event.$type = nonPropagableEventMapping || event.type;
 
         nativeEvent = event;
         handledTargets = nativeEvent.$handledTargets;
@@ -566,7 +567,8 @@ define([
         var selector,
             type = event.type || event.type,
             temp = this._events[type],
-            stale = !!event.$type || this.constructor._nonPropagableEvents[type] != null,
+            nonPropagableEvent = this.constructor._nonPropagableEvents[type] || DomResponder._nonPropagableEvents[type],
+            stale = !!event.$type || nonPropagableEvent != null,
             currEl,
             wrappedEl;
 
