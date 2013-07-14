@@ -13,70 +13,70 @@ events without having to worry about how many events are attached to the DOM.
 
 ## API
 
-### DomResponder#getElement()
+### .getElement()
 
 Returns the element associated with the instance.
 
 
-### DomResponder#on(event, fn, [context])
+### .on(event, fn, [context])
 
 Register an `event` listener `fn` (with the option to pass a `context`).
 The event name can contain a selector to be used for delegation (e.g.: `click li.item` will listen for clicks in li elements with the `item` class)
 
 
-### DomResponder#off([event], [fn], [context])
+### .off([event], [fn], [context])
 
 Remove `event` listener `fn` that was added with `context`.
 If no `fn` is passed, removes all listeners for `event` or all the emitter listeners if no `event` is passed.
 
 
-### DomResponder#hasListener(event, [fn])
+### .hasListener(event, [fn])
 
 Checks if the listener `fn` for event `event` is registered.
 If no `fn` is passed, returns true if at least one listener is registered for `event`.
 
 
-### DomResponder#addChild(responder)
+### .addChild(responder)
 
 Adds a `responder` as its child.
 
 
-### DomResponder#removeChild(responder)
+### .removeChild(responder)
 
 Removes a `responder` as its child.
 
 
-### DomResponder#removeChildren()
+### .removeChildren()
 
 Removes all child responders.
 
 
-### DomResponder#hasChild(responder)
+### .hasChild(responder)
 
 Check if a `responder` is a child of the instance.
 
 
-### DomResponder#listen()
+### .listen()
 
 Listen to all registered events as well as descendant events, acting as a proxy to them.
 
 
-### DomResponder#unlisten()
+### .unlisten()
 
 Stops listening to all registered events as well as descendant events.
 
 
-### DomResponder#isListening()
+### .isListening()
 
 Check if the instance is currently listening for events.
 
 
-### DomResponder#hasManager()
+### .hasManager()
 
 Check if the instance is not listening but has a manager proxying the events for it.
 
 
-### DomResponder#destroy()
+### .destroy()
 
 Destroys the instance.
 Stops and remove listeners, removes all children and cleans other resources.
