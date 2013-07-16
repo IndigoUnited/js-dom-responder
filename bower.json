@@ -2,6 +2,11 @@
   "name": "dom-responder",
   "version": "0.1.0",
   "main": "src/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
   "dependencies": {
     "events-emitter": "~0.1",
     "jquery": "~1.9",

@@ -85,7 +85,7 @@ Stops and remove listeners, removes all children and cleans other resources.
 
 ## How to use
 
-For now, this library is only available in the [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) format.   
+For now, this library is only available in the [AMD](https://github.com/amdjs/amdjs-api/wiki/AMD) format.
 DomResponder depends on [events-emitter](https://github.com/IndigoUnited/events-emitter), [jquery](https://github.com/jquery/jquery) and [has](https://github.com/phiggins42/has).
 
 If you use RequireJS specify them like this:
@@ -93,9 +93,9 @@ If you use RequireJS specify them like this:
 ```js
 // ...
 paths : {
-   'events-emitter': '../components/events-emitter/src',
-   'has': '../components/has/has'
-   'jquery': '../components/jquery/jquery'
+   'events-emitter': '../bower_components/events-emitter/src',
+   'has': '../bower_components/has/has'
+   'jquery': '../bower_components/jquery/jquery'
 }
 // ...
 ```
