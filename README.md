@@ -1,4 +1,4 @@
-# DOMResponder [![Build Status](https://secure.travis-ci.org/IndigoUnited/dom-responder.png?branch=master)](http://travis-ci.org/IndigoUnited/dom-responder)
+# DOMResponder [![Build Status](https://secure.travis-ci.org/IndigoUnited/js-dom-responder.png?branch=master)](http://travis-ci.org/IndigoUnited/js-dom-responder)
 
 Observe and respond to DOM events efficiently.
 
