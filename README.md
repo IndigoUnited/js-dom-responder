@@ -1,5 +1,7 @@
 # DOMResponder [![Build Status](https://secure.travis-ci.org/IndigoUnited/js-dom-responder.png?branch=master)](http://travis-ci.org/IndigoUnited/js-dom-responder)
 
+**NOTE**: This project is deprecated and is no longer mantained.
+
 Observe and respond to DOM events efficiently.
 
 This library is a low-level component to be used in hierarchial views.
